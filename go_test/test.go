@@ -6,7 +6,7 @@ import (
     "reflect"
     "strconv"
     // "os"
-    // "math/cmplx"
+    "math"
 )
 
 var (
@@ -66,6 +66,109 @@ func myClosure() func() int {
         return
     }
 }
+
+func myRecursive(x float32) float32 {
+    if x == 10 {
+        return 1/x
+    }
+    return 1/x + myRecursive(x+1)
+}
+
+// from https://gobyexample.com/pointers:
+func zeroval(ival int) int {
+    ival = 0
+    return ival
+}
+func zeroptr(iptr *int) {
+    *iptr = 0
+}
+
+func babysFirstPointerFunction( myPointer *string) {
+    *myPointer = "peepee"
+}
+
+// struct
+type Toy struct {
+    purpose string
+}
+
+// embedded type
+type BabyDoll struct {
+    Toy
+    owner string
+}
+
+func structMethod(c *BabyDoll) bool {
+    fmt.Println(c.purpose, reflect.TypeOf(c.purpose))
+    purpose := c.purpose
+
+    if purpose == "fun" {
+        return true
+    } else {
+        return false
+    }
+
+}
+
+// what is an interface?
+// a struct that is composed of only methods?
+
+// https://gobyexample.com/interfaces
+// Interfaces are named collections of method signatures.
+
+
+// from https://gobyexample.com/interfaces:
+type geometry interface {
+    area() float64
+    perim() float64
+}
+type rect struct {
+    width, height float64
+}
+type circle struct {
+    radius float64
+}
+func (r rect) area() float64 {
+    return r.width * r.height
+}
+func (r rect) perim() float64 {
+    return 2*r.width + 2*r.height
+}
+func (c circle) area() float64 {
+    return math.Pi * c.radius * c.radius
+}
+func (c circle) perim() float64 {
+    return 2 * math.Pi * c.radius
+}
+func measure(g geometry) {
+    fmt.Println(g)
+    fmt.Println(g.area())
+    fmt.Println(g.perim())
+}
+// ^_-----_-----_----^
+
+// func main() {
+//     r := rect{width: 3, height: 4}
+//     c := circle{radius: 5}
+//     measure(r)
+//     measure(c)
+// }
+
+// func goRoutine1(msg string, target int, reciever bool) string {
+//     if reciever {
+//         // one function, if reciverer wait for other go running goroutine to get to target number
+//         // otherwise iterate through unil the target number is reached and return it.
+//     } else {
+//         for i:= 0; i< target+10; i++{
+//             current := strconv.Itoa(i)
+//             targetString = strconv.Itoa(target)
+//             if current == targetString {
+//                 return current
+//             }
+//             fmt.Println(msg + ":" + current)
+//         }
+//     }
+// }
 
 func main() {
     defer fmt.Println("This is a defer statement.")
@@ -166,7 +269,7 @@ func main() {
     int1,int2 := myFunction2(1,2)
     fmt.Println(strconv.Itoa(int1),strconv.Itoa(int2))
 
-    fmt.Println(strconv.Itoa(myVariadicFunction(1,2,3,4,5,6)))
+    fmt.Println(strconv.Itoa(myVariadicFunction(1,2,3,4,5,6,7,8,9)))
 
     fmt.Println("A closure is a function within a function that returns a function? \nThat stores a value between calls, so you can like increment stuff with it?")
     evenNumberGenerator := myClosure()
@@ -184,6 +287,77 @@ func main() {
     // if err == nil {
     //  panic(err)
     // }
-    fmt.Println("A pointer is a reference to an object in memory. \nIf you want to change isntances of structs / interfaces I think you have to use pointers...(Yikes)")
+
+
+    // fmt.Println("A pointer is a reference to an object in memory. \nIf you want to change isntances of structs / interfaces I think you have to use pointers...(Yikes)")
+    fmt.Println(myRecursive(1))
+
+    lol := 1
+    fmt.Println(lol)
+    lol = zeroval(lol)
+    fmt.Println(lol)
+
+    lolz := 1
+
+    zeroptr(&lolz)
+    fmt.Println(lolz)
+
+    hehehe := "String"
+    fmt.Println(hehehe)
+
+    babysFirstPointerFunction(&hehehe)
+    fmt.Println(hehehe)
+
+    // // struct
+    // type Toy struct {
+    //     purpose string
+    // }
+    //
+    // // embedded type
+    // type BabyDoll struct {
+    //     Toy
+    //     owner string
+    // }
+
+    // Cynthia := BabyDoll{owner: "Molly"}
+
+    // type Ball struct {
+    // Radius   int
+    // Material string
+    // }
+    //
+    // type Football struct {
+    //     Ball
+    // }
+
+    // fmt.Println(Cynthia)
+    Cynthia := BabyDoll{}
+    fmt.Println(Cynthia)
+    Cynthia = BabyDoll{owner: "Boy"}
+    fmt.Println(Cynthia)
+    Cynthia = BabyDoll{owner: "Girl"}
+    fmt.Println(Cynthia)
+    // this is how you set the properties of embedded structs!!!!
+    Cynthia.purpose = "fun"
+    fmt.Println(Cynthia)
+
+    fmt.Println(structMethod(&Cynthia))
+
+    sync := make(chan string)
+
+    func goRoutine3(msg string) {
+        if 
+    }
+    sync <- "Hello, my friend."
+    // sync <- go goRoutine1("GoRoutine1",7,false)
+    fmt.Println("is it working?")
+
+    // go goRoutine1("GoRoutine2",7,true)<- sync
+    msg := <- sync
+    fmt.Scanln(msg)
+
+
+    // Cynthia = BabyDoll{Toy{purpose: "Having fun and acting out future parent-child dynamics in a safe worry-free environment where you couldn't possibly drown hurt or otherwise injure said child-surrogate. Also good for serial killers."}}
+    // fb := Football{Ball{Radius: 5, Material: "leather"}}
 
 }
