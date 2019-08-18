@@ -4,7 +4,8 @@ package main
 import (
     "fmt"
     "reflect"
-    // "strconv"
+    "strconv"
+    // "os"
     // "math/cmplx"
 )
 
@@ -18,7 +19,56 @@ var (
     z byte = 0
 )
 
-func main () {
+func myFunction(poop int) (returnItem string) {
+    switch poop % 2 {
+        case 0: returnItem =  "poop"
+        case 1: returnItem =  "pee"
+    }
+    return
+}
+
+func myFunction2(poop int, pee int) (returnItem1 int, returnItem2 int) {
+    returnItem1 = poop + poop
+    returnItem2 = pee + poop
+    return
+}
+
+func myVariadicFunction(arguments ...int) (sumOfArguments int) {
+
+    if len(arguments) > 0 {
+
+        for _, value := range arguments {
+            sumOfArguments += value
+
+        }
+
+        return
+
+    } else {
+
+        return 0
+
+    }
+
+}
+// from the Go website:
+// myClosure takes in no arguments and returns an int
+func myClosure() func() int {
+    // declare and intialize a variable 'i' to a unint(0)
+    i := int(0)
+    // return a nameless function that returns an int
+    return func() (ret int) {
+        // the return variable is set to the value of 'i'
+        ret = i
+        // 'i' is incremented by 2 (for next call of the function??)
+        i+=2
+        // 'ret' is returned... I am so confused.
+        return
+    }
+}
+
+func main() {
+    defer fmt.Println("This is a defer statement.")
     // fmt.Println(myVariable1,myVariable2,myVariable3, myBool,x,y,z, reflect.TypeOf(z))
     fmt.Println("In Go there are 8 types of ints, and 4 types of floats.")
     fmt.Println("\nA Rune is a unit64. See: ")
@@ -110,5 +160,30 @@ func main () {
     hi := myArray2[len(myArray2)-1]
 
     fmt.Println(hi)
+
+    fmt.Println(myFunction(2))
+
+    int1,int2 := myFunction2(1,2)
+    fmt.Println(strconv.Itoa(int1),strconv.Itoa(int2))
+
+    fmt.Println(strconv.Itoa(myVariadicFunction(1,2,3,4,5,6)))
+
+    fmt.Println("A closure is a function within a function that returns a function? \nThat stores a value between calls, so you can like increment stuff with it?")
+    evenNumberGenerator := myClosure()
+    fmt.Println(evenNumberGenerator())
+    fmt.Println(evenNumberGenerator())
+    fmt.Println(evenNumberGenerator())
+    fmt.Println("The benefit of a closure is you can keep secrets inside a function.")
+
+    fmt.Println("A defer statement is a command used inside a function to defer a line of the program to run last.")
+
+    // fmt.Println("A panic is... ")
+    //
+    // _, err := os.Create("/tmp/file")
+    // fmt.Println(err)
+    // if err == nil {
+    //  panic(err)
+    // }
+    fmt.Println("A pointer is a reference to an object in memory. \nIf you want to change isntances of structs / interfaces I think you have to use pointers...(Yikes)")
 
 }
