@@ -170,6 +170,17 @@ func measure(g geometry) {
 //     }
 // }
 
+func ping(pings chan<- string, msg string) {
+    pings <- msg
+}
+
+
+func pong(pings <-chan string, pongs chan<- string) {
+    msg := <-pings
+    pongs <- msg
+}
+
+
 func main() {
     defer fmt.Println("This is a defer statement.")
     // fmt.Println(myVariable1,myVariable2,myVariable3, myBool,x,y,z, reflect.TypeOf(z))
@@ -343,21 +354,27 @@ func main() {
 
     fmt.Println(structMethod(&Cynthia))
 
-    sync := make(chan string)
+    // sync := make(chan string)
 
-    func goRoutine3(msg string) {
-        if 
-    }
-    sync <- "Hello, my friend."
+    // func goRoutine3(msg string) {
+    //     if
+    // }
+    // sync <- "Hello, my friend."
     // sync <- go goRoutine1("GoRoutine1",7,false)
-    fmt.Println("is it working?")
+    // fmt.Println("is it working?")
 
     // go goRoutine1("GoRoutine2",7,true)<- sync
-    msg := <- sync
-    fmt.Scanln(msg)
+    // msg := <- sync
+    // fmt.Scanln(msg)
 
 
     // Cynthia = BabyDoll{Toy{purpose: "Having fun and acting out future parent-child dynamics in a safe worry-free environment where you couldn't possibly drown hurt or otherwise injure said child-surrogate. Also good for serial killers."}}
     // fb := Football{Ball{Radius: 5, Material: "leather"}}
+
+    pings := make(chan string, 1)
+    pongs := make(chan string, 1)
+    ping(pings, "hi")
+    pong(pings, pongs)
+    fmt.Println(<-pongs)
 
 }
