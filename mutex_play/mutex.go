@@ -26,7 +26,7 @@ func doubleMessageWithPointer(msg *string, wg *sync.WaitGroup, m *sync.Mutex) {
     *msg = dereference+" "+dereference
     m.Unlock()
     wg.Done()
-    fmt.Println(wg, time.Since(start))
+    // fmt.Println(wg, time.Since(start))
 }
 
 
@@ -34,7 +34,7 @@ func doubleMessageWithPointer(msg *string, wg *sync.WaitGroup, m *sync.Mutex) {
 //     start := time.Now()
 // }
 
-var start time.Time
+// var start time.Time
 
 func main() {
 
@@ -47,18 +47,29 @@ func main() {
     var wg sync.WaitGroup
     var m sync.Mutex
 
-    for i := 0; i < 20; i++{
+    start1 := time.Now()
+    fmt.Println("doubleMessage start", start1)
+    for i := 0; i < 5; i++{
         msg1 = doubleMessage(msg1)
         // go doubleMessageWithPointer(&msg)
         // doubleMessageWithPointer(&msg)
     }
+    interval1 := time.Since(start1).Seconds()
 
-    for i := 0; i < 20; i++{
+    start2 := time.Now()
+    fmt.Println("doubleMessageWithPointer start", start2)
+    for i := 0; i < 5; i++{
         wg.Add(1)
         go doubleMessageWithPointer(&msg2, &wg, &m)
     }
 
     wg.Wait()
+    interval2 := time.Since(start2).Seconds()
+    // fmt.Println(interval2, reflect.TypeOf(time.Since(start2).Seconds()))
+    // fmt.Println("doubleMessageWithPointer start", time.Since(start2))
+
+    fmt.Println(interval1, interval2, interval2<interval1)
+
     fmt.Println(len(msg1))
     fmt.Println(len(msg2))
     fmt.Println("finished", time.Since(start))
