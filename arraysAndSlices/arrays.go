@@ -6,8 +6,11 @@ import (
 )
 
 /*
+
     "mixing different values belonging to different data types in an array
     is not allowed... In Go, an array has a fixed length.
+    [In Go, an array is...]
+
     ...a composite data type
     ...composed of primitive data types
 
@@ -26,7 +29,7 @@ func doesNotChange(array [3]int) {
     fmt.Println(array)
 }
 
-// good for intializing global variables before main() runs.
+// init() == good for intializing global variables before main() runs.
 func init(){
     for i := 0; i < 10; i++ {
         myArray[i] = i+1
@@ -66,10 +69,14 @@ func main() {
     }
 
     /*
+
     multi-dimensional arrays:
-    "an array is a collection of same data types and array is a type in itself,
-    a multi-dimensional array must have arrays
-    that belong to the same data type."
+
+        "an array is a collection of same data types
+        and array is a type in itself,
+        a multi-dimensional array must have arrays
+        that belong to the same data type."
+
     */
 
     // declaring a multidimensional array
@@ -80,7 +87,8 @@ func main() {
     fmt.Println(threeNumbers)
 
     // shorter syntax:
-    // the interior elements of a multi-dimensional array must be the same
+    // the interior elements of
+    // a multi-dimensional array must be the same
     // here they are [2]string
     multi := [...][2]string{ {"hi","hey"}, {"hi","hey"} }
     fmt.Println(multi)
@@ -93,18 +101,19 @@ func main() {
     }
 
     /*
-    "When you pass an array to a function,
-    they are passed by value like int or string data type.
-    The function receives only a copy of it.
-    Hence, when you make changes to an array inside a function,
-    it won’t be reflected in the original array."
+
+        "When you pass an array to a function,
+        they are passed by value like int or string data type.
+        The function receives only a copy of it.
+        Hence, when you make changes to an array inside a function,
+        it won’t be reflected in the original array."
+
     */
 
     // Example:
     fmt.Println(myArray3)
     doesNotChange(myArray3)
     fmt.Println(myArray3)
-
     // slices are pass by reference...
 
 }
