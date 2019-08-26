@@ -27,7 +27,7 @@ func myFunction(poop int) (returnItem string) {
     return
 }
 
-func myFunction2(poop int, pee int) (returnItem1 int, returnItem2 int) {
+func myFunction2(poop, pee int) (returnItem1, returnItem2 int) {
     returnItem1 = poop + poop
     returnItem2 = pee + poop
     return

@@ -48,15 +48,39 @@ func main() {
 
     // "append does not mutate original slice"
     // unless you want it to...
-    mySlice = append(mySlice, 11,12,14)
-    fmt.Println(mySlice)
+    mySlice = append(mySlice, newSlice...)
+    fmt.Println("h",mySlice)
 
     // but it does mutate the underlying array...
     fmt.Println(myArray)
 
-    // slices are no easy business.
+    // "slices are no easy business.
     // Use append only to self assign the new slice like s = append(s, ...)
-    // which is more manageable.
+    // which is more manageable."
+
+    newerSlice := []int{1,2}
+    // copy returns an int, the # of items copied.
+    n1 := copy(newerSlice, mySlice)
+    fmt.Println(n1,newerSlice)
+
+    // slices as function parameters::
+    // "slices are still passed by value to the function but since
+    // they reference the same underneath the array,
+    // it looks like that they are passed by reference."
+
+    // comparing two slices:
+    // "You will get error invalid operation: s1 == s2
+    // (slice can only be compared to nil) which means that slices
+    // can be only checked for the condition of nil or not.
+    // If you really need to compare two slices, use for range loop
+    // to match each element of the two slices or use DeepEquel
+    // function of reflect package."
+
+    // anonymous slice:
+    // can't access underlying array that slice references
+    anonSlice := []int{1,2,3}
+
+    
 
 
 }

@@ -26,6 +26,12 @@ type Being interface {
     breathing() string
 }
 
+type Empty interface{}
+
+type OneMethod interface {
+    doSomething() int
+}
+
 type Human interface {
     pooping() string
 }
@@ -75,6 +81,7 @@ func main() {
  fmt.Println(Anne, recliner)
  fmt.Printf("%+v\n", Anne)
 
+// Being is an interface
  var inter Being = Thing{true}
 
  /*
@@ -92,5 +99,15 @@ func main() {
  _, ok2 := inter.(Human) // type assertion variableName.(Type)
 
  fmt.Println(ok2, reflect.TypeOf(inter))
+
+ _, ok3 :=inter.(Empty)
+ fmt.Println(ok3, reflect.TypeOf(inter))
+
+ _, ok4 :=inter.(OneMethod)
+ fmt.Println(ok4, reflect.TypeOf(inter))
+
+ // 'inter' type isn't changing as of the reflect statement,
+ // but the boolean is checking correctly.
+
 
 }
