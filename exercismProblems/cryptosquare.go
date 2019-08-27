@@ -80,36 +80,71 @@ func normalize(input string) (output string) {
             output += test
         }
     }
-    fmt.Println(len(output))
+    
+    return
+}
+
+func findPair(product int) (c,r int){
+    for ; r < product; r++{
+        for c = 0; c < product; c++{
+            if c*r == product && c - r <= 1 && c >= r{
+                return
+            }
+        }
+    }
     return
 }
 
 func main() {
 
-    // The plaintext should be organized in to a rectangle.
-    // The size of the rectangle (r x c) should be decided by the
-    // length of the message, such that c >= r and c - r <= 1,
-    // where c is the number of columns and r is the number of rows.
-
+    // normalize text by removing all non a-z chars
     normalized := normalize("asdaqdsadw1112!!@@ccc dsdds d!!!e")
+    fmt.Println(normalized)
 
-    // c X r
-    // need to figure out how to find
-    // the two numbers that multiply to len(input)
-    // and are only one apart (4*5 == 20)
+    // find c X r so that c >= r and c - r <= 1
     var (c, r int)
-    if len(normalized) % 2 == 0 {
-        c, r = len(normalized)/2, len(normalized)/2
-    } else {
-        num := (len(normalized)/2)
-        c, r = len(normalized)-num, num
-    }
+    c, r = findPair(20)
     fmt.Println(c,r)
-    normalizedList := make([][]int, c)
+
+    // create a new multidimensional array of length [c][r]
+    normalizedList := make([][]string, c)
     for i := range normalizedList {
-        normalizedList[i] = make([]int, r)
+        normalizedList[i] = make([]string, r)
     }
     fmt.Println(normalizedList)
 
+    // iterate through the normalized string and put each character into
+    // the array going left to right, top to bottom
+    counter := 0
+    for i := 0; i < len(normalizedList); i++{
+        for j := 0; j < len(normalizedList[i]); j++{
+            normalizedList[i][j] = string(normalized[counter])
+            counter += 1
+        }
+    }
+    fmt.Println(normalizedList)
+
+    // create a new array of length [r][c] for the scrambled list
+    scrambledList := make([][]string, r)
+    for i := range scrambledList {
+        scrambledList[i] = make([]string, c)
+    }
+    fmt.Println(scrambledList)
+
+    // iterate through the multidimensional array and swap the characters
+    // so that normalizedList[c][r] == scrambledList[r][c]
+    counter = 0
+    for i := 0; i < len(normalizedList); i++{
+        for j := 0; j < len(normalizedList[i]); j++{
+            scrambledList[j][i] = string(normalized[counter])
+            counter += 1
+        }
+    }
+    fmt.Println(scrambledList)
+
+    // print the scrambled list line by line
+    for line := range(scrambledList){
+        fmt.Println(scrambledList[line])
+    }
 
 }
