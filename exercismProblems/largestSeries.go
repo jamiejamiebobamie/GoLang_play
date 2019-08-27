@@ -36,12 +36,13 @@ func largestSub(input string, n int) (maxInt, maxIndex int){
         for j:= i; j < n+i; {
 
             if j < len(input){
-            number := string(input[j])
-            inte, ok := strconv.Atoi(number)
+                number := string(input[j])
+                inte, ok := strconv.Atoi(number)
 
-            if ok == nil { product = product * inte }
-            // fmt.Println(inte, maxInt, i , j)
+                if ok == nil { product = product * inte }
+
             }
+
             j+=1
 
         }

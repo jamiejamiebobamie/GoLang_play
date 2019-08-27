@@ -13,14 +13,12 @@ the program should return a list containing "inlets".
 
 package main
 
-
 import (
     "fmt"
     "sort"
     _"reflect"
     "strings"
 )
-
 
 func getAnagrams(word string) (value []string) {
     var LOOKUP map[string][]string = map[string][]string{"eilnst" : {"listen",
