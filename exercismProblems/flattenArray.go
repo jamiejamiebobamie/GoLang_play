@@ -24,7 +24,7 @@ output: [1,2,3,4,5]
 // So the example input would not be recognized in Go:
 // input: [1,[2,3,null,4],[null],5]
 // output: [1,2,3,4,5]
-// the nil vale of an int is 0...
+// also the nil value of an int is 0...
 
 package main
 
